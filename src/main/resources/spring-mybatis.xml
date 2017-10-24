@@ -48,4 +48,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean name="user" class="com.gjl.topmovies.pojo.User">
+        <property name="userName" value="tom"/>
+    </bean>
+
 </beans>
