@@ -1,3 +1,4 @@
+import com.gjl.topmovies.mapping.UserMapper;
 import com.gjl.topmovies.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -25,7 +26,12 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<User> users = sqlSession.selectList("getAllUser");
+        List<User> users;
+//        users = sqlSession.selectList("getAllUser");
+
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        users = userMapper.getAllUser();
 
         System.out.println("show all users:");
         for (User user : users) {
@@ -46,7 +52,9 @@ public class MybatisTest {
         User newUser = new User();
         newUser.setUserName("王五");
         newUser.setUserEmail("");
-        int succ = sqlSession.insert("insertUser", newUser);
+//        int succ = sqlSession.insert("insertUser", newUser);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        int succ = userMapper.insert(newUser);
         sqlSession.commit();
 
         System.out.println("insert new user :" + newUser.getUserName() + "  succ: " + (succ == 1));
@@ -67,9 +75,13 @@ public class MybatisTest {
         User newUser = new User();
         newUser.setUserName("王五");
         newUser.setUserEmail("wangwu@qq.com");
-        newUser.setUserId(6);
-        int succ = sqlSession.update("updateUser", newUser);
+        newUser.setUserId(8);
+//        int succ = sqlSession.update("updateUser", newUser);
+
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        userMapper.update(newUser);
         sqlSession.commit();
+
 
         sqlSession.close();
     }
@@ -82,7 +94,10 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        User user = sqlSession.selectOne("getUserById", "1");
+//        User user = sqlSession.selectOne("getUserById", "1");
+
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.getUserById(1);
 
         if (user != null) {
             System.out.println(user);
@@ -101,9 +116,11 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        int userId = 6;
-        int succ = sqlSession.delete("deleteUser", "" + userId);
+        int userId = 8;
+//        int succ = sqlSession.delete("deleteUser", "" + userId);
 
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        int succ = userMapper.delete(userId + "");
         if (succ > 0) {
             System.out.println("delete user where userId=" + userId + "  succ");
         }
@@ -121,8 +138,10 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<User> users = sqlSession.selectList("getUserByName", "张");
+//        List<User> users = sqlSession.selectList("getUserByName", "张");
 
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> users = userMapper.getUserByName("张");
         System.out.println("show all users:");
         for (User user : users) {
             System.out.println(user);
@@ -139,11 +158,14 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        Map<String, Object> queryParams = new HashMap();
-        queryParams.put("username", "张");
-        queryParams.put("email", "sina");
+//        Map<String, Object> queryParams = new HashMap();
+//        queryParams.put("username", "张");
+//        queryParams.put("email", "sina");
+//
+//        List<User> users = sqlSession.selectList("getUserByNameAndEmail", queryParams);
 
-        List<User> users = sqlSession.selectList("getUserByNameAndEmail", queryParams);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        List<User> users = userMapper.getUserByNameAndEmail("张", "sina");
 
         System.out.println("show select users:");
         for (User user : users) {

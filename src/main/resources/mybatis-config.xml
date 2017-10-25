@@ -26,6 +26,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/gjl/topmovies/mapping/UserMapper.xml"/>
+
+        <mapper class="com.gjl.topmovies.mapping.UserMapper"/>
     </mappers>
 </configuration>
