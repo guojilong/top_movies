@@ -1,8 +1,11 @@
 package com.gjl.topmovies.pojo;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by guojilong on 2017/10/18.
  */
+@Component("user")
 public class User {
 
     public int getUserId() {
@@ -30,7 +33,7 @@ public class User {
     }
 
     private int userId;
-    private String UserName;
+    private String UserName="default user";
     private String UserEmail;
 
 
