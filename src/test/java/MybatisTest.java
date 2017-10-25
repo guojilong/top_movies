@@ -23,7 +23,6 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-
         List<User> users = sqlSession.selectList("getAllUser");
         for (User user : users) {
             System.out.println(user);

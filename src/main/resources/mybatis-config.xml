@@ -6,7 +6,7 @@
     <properties resource="jdbc.properties"/>
 
     <typeAliases>
-        <package name="com.gjl.topmovies.pojo"/>
+        <package name="com.gjl.topmovies"/>
     </typeAliases>
 
 
