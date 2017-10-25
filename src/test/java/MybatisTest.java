@@ -24,10 +24,90 @@ public class MybatisTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         List<User> users = sqlSession.selectList("getAllUser");
+
+        System.out.println("show all users:");
         for (User user : users) {
             System.out.println(user);
         }
 
         sqlSession.close();
+    }
+
+
+    @Test
+    public void insertTest() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        User newUser = new User();
+        newUser.setUserName("王五");
+        newUser.setUserEmail("");
+        int succ = sqlSession.insert("insertUser", newUser);
+        sqlSession.commit();
+
+        System.out.println("insert new user :" + newUser.getUserName() + "  succ: " + (succ == 1));
+
+
+        queryTest();
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void updateTest() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        User newUser = new User();
+        newUser.setUserName("王五");
+        newUser.setUserEmail("wangwu@qq.com");
+        newUser.setUserId(6);
+        int succ = sqlSession.update("updateUser", newUser);
+        sqlSession.commit();
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void selectOneTest() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        User user = sqlSession.selectOne("getUserById","1");
+
+        if (user!=null) {
+            System.out.println(user);
+        }
+
+
+        sqlSession.close();
+    }
+
+
+    @Test
+    public void deleteTest() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        int userId=6;
+        int succ= sqlSession.delete("deleteUser",""+userId);
+
+        if (succ>0) {
+            System.out.println("delete user where userId="+userId+"  succ");
+        }
+        sqlSession.commit();
+
+        sqlSession.close();
+
     }
 }
