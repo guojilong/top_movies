@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by guojilong on 2017/10/25.
@@ -80,9 +82,9 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        User user = sqlSession.selectOne("getUserById","1");
+        User user = sqlSession.selectOne("getUserById", "1");
 
-        if (user!=null) {
+        if (user != null) {
             System.out.println(user);
         }
 
@@ -99,15 +101,55 @@ public class MybatisTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        int userId=6;
-        int succ= sqlSession.delete("deleteUser",""+userId);
+        int userId = 6;
+        int succ = sqlSession.delete("deleteUser", "" + userId);
 
-        if (succ>0) {
-            System.out.println("delete user where userId="+userId+"  succ");
+        if (succ > 0) {
+            System.out.println("delete user where userId=" + userId + "  succ");
         }
         sqlSession.commit();
 
         sqlSession.close();
 
+    }
+
+    @Test
+    public void queryUserByNameTest() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        List<User> users = sqlSession.selectList("getUserByName", "张");
+
+        System.out.println("show all users:");
+        for (User user : users) {
+            System.out.println(user);
+        }
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void querySinaUserZhang() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        Map<String, Object> queryParams = new HashMap();
+        queryParams.put("username", "张");
+        queryParams.put("email", "sina");
+
+        List<User> users = sqlSession.selectList("getUserByNameAndEmail", queryParams);
+
+        System.out.println("show select users:");
+        for (User user : users) {
+            System.out.println(user);
+        }
+
+        sqlSession.close();
     }
 }

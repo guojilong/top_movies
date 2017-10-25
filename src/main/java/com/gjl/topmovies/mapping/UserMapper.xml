@@ -19,6 +19,13 @@
         select * from user where userId= #{userId}
     </select>
 
+    <select id="getUserByName" resultMap="usermap" parameterType="String">
+        SELECT * FROM user where   UserName like concat('%',#{0},'%')
+    </select>
+
+    <select id="getUserByNameAndEmail" resultMap="usermap">
+        SELECT * FROM user where   UserName like concat('%',#{username},'%') and UserEmail like concat ('%',#{email},'%')
+    </select>
 
     <insert id="insertUser" parameterType="com.gjl.topmovies.pojo.User">
         insert into user (UserName, UserEmail) values (
