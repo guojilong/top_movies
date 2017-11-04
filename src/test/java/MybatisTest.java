@@ -1,4 +1,4 @@
-import com.gjl.topmovies.mapping.UserMapper;
+import com.gjl.topmovies.mapper.UserDao;
 import com.gjl.topmovies.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by guojilong on 2017/10/25.
@@ -29,9 +27,9 @@ public class MybatisTest {
         List<User> users;
 //        users = sqlSession.selectList("getAllUser");
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
 
-        users = userMapper.getAllUser();
+        users = userDao.getAllUser();
 
         System.out.println("show all users:");
         for (User user : users) {
@@ -53,8 +51,8 @@ public class MybatisTest {
         newUser.setUserName("王五");
         newUser.setUserEmail("");
 //        int succ = sqlSession.insert("insertUser", newUser);
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        int succ = userMapper.insert(newUser);
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        int succ = userDao.insertUser(newUser);
         sqlSession.commit();
 
         System.out.println("insert new user :" + newUser.getUserName() + "  succ: " + (succ == 1));
@@ -78,8 +76,8 @@ public class MybatisTest {
         newUser.setUserId(8);
 //        int succ = sqlSession.update("updateUser", newUser);
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        userMapper.update(newUser);
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        userDao.updateUser(newUser);
         sqlSession.commit();
 
 
@@ -96,8 +94,8 @@ public class MybatisTest {
 
 //        User user = sqlSession.selectOne("getUserById", "1");
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        User user = userMapper.getUserById(1);
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        User user = userDao.getUserById(1);
 
         if (user != null) {
             System.out.println(user);
@@ -119,8 +117,8 @@ public class MybatisTest {
         int userId = 8;
 //        int succ = sqlSession.delete("deleteUser", "" + userId);
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        int succ = userMapper.delete(userId + "");
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        int succ = userDao.deleteUser(userId + "");
         if (succ > 0) {
             System.out.println("delete user where userId=" + userId + "  succ");
         }
@@ -140,8 +138,8 @@ public class MybatisTest {
 
 //        List<User> users = sqlSession.selectList("getUserByName", "张");
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        List<User> users = userMapper.getUserByName("张");
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.getUserByName("张");
         System.out.println("show all users:");
         for (User user : users) {
             System.out.println(user);
@@ -164,8 +162,8 @@ public class MybatisTest {
 //
 //        List<User> users = sqlSession.selectList("getUserByNameAndEmail", queryParams);
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-        List<User> users = userMapper.getUserByNameAndEmail("张", "sina");
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        List<User> users = userDao.getUserByNameAndEmail("张", "sina");
 
         System.out.println("show select users:");
         for (User user : users) {

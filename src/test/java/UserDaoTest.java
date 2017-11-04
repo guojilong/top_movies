@@ -1,14 +1,11 @@
-import com.gjl.topmovies.mapping.UserMapper;
+import com.gjl.topmovies.mapper.UserDao;
 import com.gjl.topmovies.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import java.io.IOException;
@@ -20,9 +17,9 @@ import java.util.List;
  */
 
 
-public class UserMapperTest {
+public class UserDaoTest {
     @Autowired
-    private UserMapper userDao;
+    private UserDao userDao;
 
     @Test
     public void insertTest() throws IOException {
@@ -34,12 +31,12 @@ public class UserMapperTest {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = new User();
         user.setUserName("哈哈");
         user.setUserEmail("dsfsdfjsdjf@qq.com");
 
-       int value= userDao.insert(user);
+       int value= userDao.insertUser(user);
 
         System.out.println("insert data count :"+value);
 
@@ -58,33 +55,33 @@ public class UserMapperTest {
     @Test
     public void queryTest() throws IOException {
 
-//        String resource = "spring-mybatis.xml";
-//
-//        InputStream inputStream = Resources.getResourceAsStream(resource);
-//
-//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//
-//        SqlSession sqlSession = sqlSessionFactory.openSession();
-//
-//        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-//
-//
-//        List<User> users = userDao.getAllUser();
-//
-//        for (User user : users) {
-//            System.out.println(user.toString());
-//        }
-//
-//
-//        sqlSession.commit();
-//
-//        sqlSession.close();
+        String resource = "mybatis-config.xml";
 
-        List<User> userLists = userDao.getAllUser();
+        InputStream inputStream = Resources.getResourceAsStream(resource);
 
-        for (User user : userLists) {
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+
+
+        List<User> users = userDao.getAllUser();
+
+        for (User user : users) {
             System.out.println(user.toString());
         }
+
+
+        sqlSession.commit();
+
+        sqlSession.close();
+//
+//        List<User> userLists = userDao.getAllUser();
+//
+//        for (User user : userLists) {
+//            System.out.println(user.toString());
+//        }
 
     }
 }

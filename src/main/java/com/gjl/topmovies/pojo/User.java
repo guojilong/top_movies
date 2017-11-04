@@ -1,11 +1,11 @@
 package com.gjl.topmovies.pojo;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by guojilong on 2017/10/18.
  */
-@Component("user")
+@Repository
 public class User {
 
     public int getUserId() {

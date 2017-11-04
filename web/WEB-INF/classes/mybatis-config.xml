@@ -14,15 +14,19 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${url}"/>
-                <property name="username" value="${username}"/>
-                <property name="password" value="$(password)"/>
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/top_movies?characterEncoding=UTF-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+                <!--<property name="driver" value="${driver}"/>-->
+                <!--<property name="url" value="${url}"/>-->
+                <!--<property name="username" value="${username}"/>-->
+                <!--<property name="password" value="$(password)"/>-->
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/gjl/topmovies/mapping/UserMapper.xml"/>
+
+        <mapper class="com.gjl.topmovies.mapper.UserDao"/>
     </mappers>
 </configuration>
