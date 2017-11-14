@@ -6,11 +6,13 @@ import com.gjl.topmovies.model.Response;
 import com.gjl.topmovies.service.impl.LoginServiceImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.http.converter.json.GsonFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +29,7 @@ public class Securities {
     @Autowired
     LoginServiceImpl loginService;
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     @ResponseBody
     public MyHttpResponse login(HttpServletRequest request) {
 
@@ -59,5 +61,11 @@ public class Securities {
         }
 
 
+    }
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ResponseBody
+    public MyHttpResponse register(HttpServletRequest request){
+
+        return MyHttpResponse.ok("");
     }
 }
