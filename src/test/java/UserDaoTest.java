@@ -1,5 +1,5 @@
 import com.gjl.topmovies.mapper.UserDao;
-import com.gjl.topmovies.pojo.User;
+import com.gjl.topmovies.model.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

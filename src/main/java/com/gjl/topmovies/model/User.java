@@ -1,4 +1,4 @@
-package com.gjl.topmovies.pojo;
+package com.gjl.topmovies.model;
 
 import org.springframework.stereotype.Repository;
 
@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class User {
+
+    private int userId;
+    private String UserName = "default user";
+    private String UserEmail;
+    private String password;
 
     public int getUserId() {
         return userId;
@@ -32,10 +37,13 @@ public class User {
         UserEmail = userEmail;
     }
 
-    private int userId;
-    private String UserName="default user";
-    private String UserEmail;
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {

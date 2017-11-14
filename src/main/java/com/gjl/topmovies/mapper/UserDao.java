@@ -1,11 +1,6 @@
 package com.gjl.topmovies.mapper;
 
-import com.gjl.topmovies.pojo.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.mybatis.spring.annotation.MapperScan;
+import com.gjl.topmovies.model.User;
 
 import java.util.List;
 
@@ -32,4 +27,6 @@ public interface UserDao {
 
 
     public List<User> getUserByNameAndEmail(String username, String email);
+
+    public List<User> getUserByNameOrEmail(String username);
 }
